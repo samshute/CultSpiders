@@ -1,0 +1,54 @@
+<html>
+	<head>
+		<title> Yo </title>
+
+        <link rel="stylesheet" type="text/css" href="style.css">
+
+        <!-- Game       -->
+        <script type="text/javascript" src="src/Game.js"></script>
+        <!-- Util -->
+        <script type="text/javascript" src="src/Util/Util.js"></script>
+        <script type="text/javascript" src="src/Util/Sprites.js"></script>
+        <script type="text/javascript" src="src/Util/EventQueue.js"></script>
+
+		<!-- Stages     -->
+        <script type="text/javascript" src="src/Stages/StageBase.js"></script>
+        <script type="text/javascript" src="src/Stages/TestStage.js"></script>
+		
+		<!-- Managers     -->
+		<script type="text/javascript" src="src/Managers/baseManager.js"></script>
+		
+        <!-- Entities     -->
+        <script type="text/javascript" src="src/Entitys/EntityBase.js"></script>
+		<script type="text/javascript" src="src/Entitys/Player.js"></script>	
+		<script type="text/javascript" src="src/Entitys/Base.js"></script>
+
+        
+
+	</head>
+	<body>
+		<div id="loading-container" class="middle-center">
+            <img src="assets/throbber.gif" />
+            <p> Stuffs loading yo (or broken)</p>
+		</div>
+		
+		<script type="text/javascript">
+            "use strict";
+
+            let WIDTH  = 1024,
+                HEIGHT = 1024,
+                INITIAL_STAGE = TestStage;
+
+			window.addEventListener("load", function() {
+                Util.Sprites.onFinishedLoad(function() {
+                    let body = document.querySelector("body");
+
+                    window.Game = new Game(body, WIDTH, HEIGHT);
+                    window.Game.start(new INITIAL_STAGE());
+
+                    document.querySelector("#loading-container").classList.add("hidden");
+                })
+			});
+		</script>
+	</body>
+</html>
