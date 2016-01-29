@@ -10,10 +10,13 @@
         <script type="text/javascript" src="src/Util/Util.js"></script>
         <script type="text/javascript" src="src/Util/Sprites.js"></script>
         <script type="text/javascript" src="src/Util/EventQueue.js"></script>
+        <script type="text/javascript" src="src/Util/MessageTypes.js"></script>
+        <script type="text/javascript" src="src/Util/Connection.js"></script>
 
 		<!-- Stages     -->
         <script type="text/javascript" src="src/Stages/StageBase.js"></script>
         <script type="text/javascript" src="src/Stages/TestStage.js"></script>
+        <script type="text/javascript" src="src/Stages/ConnectionStage.js"></script>
 		
 		<!-- Managers     -->
 		<script type="text/javascript" src="src/Managers/baseManager.js"></script>
@@ -22,9 +25,6 @@
         <script type="text/javascript" src="src/Entitys/EntityBase.js"></script>
 		<script type="text/javascript" src="src/Entitys/Player.js"></script>	
 		<script type="text/javascript" src="src/Entitys/Base.js"></script>
-
-        
-
 	</head>
 	<body>
 		<div id="loading-container" class="middle-center">
@@ -36,15 +36,14 @@
             "use strict";
 
             let WIDTH  = 1024,
-                HEIGHT = 1024,
-                INITIAL_STAGE = TestStage;
+                HEIGHT = 1024;
 
 			window.addEventListener("load", function() {
                 Util.Sprites.onFinishedLoad(function() {
                     let body = document.querySelector("body");
 
                     window.Game = new Game(body, WIDTH, HEIGHT);
-                    window.Game.start(new INITIAL_STAGE());
+                    window.Game.start(new ConnectionStage(CONNECTION_URL));
 
                     document.querySelector("#loading-container").classList.add("hidden");
                 })

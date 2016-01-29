@@ -1,0 +1,148 @@
+<html>
+	<head>
+		<title> CONTROLLER YO </title>
+
+        <script type="text/javascript" src="src\Util\MessageTypes.js"></script>
+        <script type="text/javascript" src="src\Util\Connection.js"></script>
+
+        <style type="text/css">
+            #page-container { }
+
+            #controller-view {
+                
+            }
+
+            #loading-screen {
+            }
+
+            .hidden { display: none; }
+        </style>
+	</head>
+
+	<body>
+        <div id="page-container">
+            <div id="connect-screen">
+                <button id="connect-button">Connect</button>
+            </div>
+
+            <div id="loading-screen" class="hidden">
+                <img src="assets/throbber.gif" alt="loading" />
+            </div>
+
+            <div id="start-screen" class="hidden">
+                <p> Waiting on game start </p>
+                <button id="start-game"> Start game </button>
+            </div>
+
+            <div id="countdown-screen" class="hidden">
+                Game Beginning!!
+            </div>
+
+            <div id="controller-screen" class="hidden">
+                <button id="control-left">Left</button>
+                <button id="control-up">Up</button>
+                <button id="control-down">Down</button>
+                <button id="control-right">Right</button>
+            </div>
+        </div>
+
+		<script type="text/javascript">
+            "use strict";
+			
+			let url = CONNECTION_URL;
+            let connection = null;
+
+            let connectButton = document.querySelector("#connect-button");
+            let startGameButton = document.querySelector("#start-game");
+
+            let connectScreen = document.querySelector("#connect-screen");
+            let startScreen = document.querySelector("#start-screen");
+            let loadingScreen = document.querySelector("#loading-screen");
+            let countDownTime = document.querySelector("#countdown-screen");
+            let controllerScreen = document.querySelector("#controller-screen");
+
+            let buttonUp = document.querySelector("#control-up");
+            let buttonDown = document.querySelector("#control-down");
+            let buttonLeft = document.querySelector("#control-left");
+            let buttonRight = document.querySelector("#control-right");
+
+            let playerId = null;
+            let startDateTime = null;
+            let currentDirection = null;
+
+            function startCountDown(msg) {
+                startScreen.classList.add("hidden");
+                loadingScreen.classList.add("hidden");
+                countDownTime.classList.remove("hidden");
+
+                startDateTime = new Date(msg.Data.Time);
+
+                setInterval(continueCountDown, 1000);
+            }
+
+            function continueCountDown() {
+                clearInterval(continueCountDown);
+
+                var currentDateTime = new Date();
+                var span = (startDateTime.getTime() - currentDateTime.getTime()) / 1000;
+
+                countDownTime.innerText = Math.ceil(span);
+
+                if (span <= 0)
+                    startGame();
+                else
+                    setInterval(continueCountDown, 500);
+            }
+
+            function startGame() {
+                countDownTime.classList.add("hidden");
+                controllerScreen.classList.remove("hidden");               
+
+                buttonUp.addEventListener("mousedown", function() { setDirection(0); });
+                buttonRight.addEventListener("mousedown", function() { setDirection(1); });
+                buttonLeft.addEventListener("mousedown", function() { setDirection(3); });
+                buttonDown.addEventListener("mousedown", function() { setDirection(2); });
+            }
+
+            function setDirection(dir) {
+                if (currentDirection === dir)
+                    return;
+
+                currentDirection = dir;
+                connection.send({Type: MessageTypes.Command, Data: { PlayerId: playerId, Direction: dir }});
+            }
+
+            connectButton.addEventListener("click", function() {
+                connectScreen.classList.add("hidden");
+                loadingScreen.classList.remove("hidden");
+
+                connection = new Connection(url, {
+                    onConnect: function(event) {  
+                        connection.send({ Type: MessageTypes.RegisterTalk });
+                    },
+                    onReceive: function(data) {
+                        if (data.Type != MessageTypes.PlayerIdAssigned)
+                            throw "Received wrong message, this is a problem.";
+
+                        playerId = data.Id;
+
+                        startScreen.classList.remove("hidden");
+
+                        connection.onReceive = function(data) {
+                            if (data.Type != MessageTypes.StartTimer)
+                                throw "Received wrong message, this is a problem.";
+
+                            startCountDown(data);
+                        }
+                    },
+                })
+            });
+
+	        startGameButton.addEventListener("click", function() {
+                connection.send({ Type: MessageTypes.Start, Data: { PlayerId: playerId } });
+
+                startScreen.classList.remove("hidden");
+            });    
+		</script>
+	</body>
+</html>
