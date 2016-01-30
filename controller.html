@@ -57,7 +57,7 @@
 
 	<body>
         <div id="page-container">
-            <div id="connect-screen" class="hidden">
+            <div id="connect-screen" class="nothidden">
                 <button id="connect-button">Connect</button>
             </div>
 
@@ -74,7 +74,7 @@
                 Game Beginning!!
             </div>
 
-            <div id="button-screen" class="nothidden">
+            <div id="button-screen" class="hidden">
                 <div id="dpad">
                     <img id="button-left" class="arrow-key" src="assets/controller/but_left.png" />
                     <img id="button-up" class="arrow-key" src="assets/controller/but_up.png" />
@@ -107,6 +107,11 @@
             let playerId = null;
             let startDateTime = null;
             let currentDirection = null;
+
+            buttonUp.addEventListener("mousedown", function(e) { setDirection(1, e.target); });
+            buttonRight.addEventListener("mousedown", function(e) { setDirection(2, e.target); });
+            buttonDown.addEventListener("mousedown", function(e) { setDirection(3, e.target); });
+            buttonLeft.addEventListener("mousedown", function(e) { setDirection(4, e.target); });
 
             document.body.addEventListener('touchmove', function(e){ e.preventDefault(); });
             window.addEventListener("scroll",function(){ window.scrollTo(0,1) },false)
@@ -144,11 +149,6 @@
             function startGame() {
                 countDownTime.classList.add("hidden");
                 controllerScreen.classList.remove("hidden");               
-
-                buttonUp.addEventListener("touchstart", function(e) { setDirection(1, e.target); });
-                buttonRight.addEventListener("touchstart", function(e) { setDirection(2, e.target); });
-                buttonDown.addEventListener("touchstart", function(e) { setDirection(3, e.target); });
-                buttonLeft.addEventListener("touchstart", function(e) { setDirection(4, e.target); });
             }
 
             function setDirection(dir, elemnt) {
@@ -158,11 +158,12 @@
                 window.navigator.vibrate(100);
 
 
-                let allElements = documnet.querySelectorAll("arrow-keys");
+                /*let allElements = document.querySelectorAll(".arrow-key");
+                allElement.forEach(function(element)
                 for(let ele of allElements) 
                     element.src = element.src.replace("_active.png", ".png");
 
-                element.src = element.src.replace(".png", "_active.png");
+                element.src = element.src.replace(".png", "_active.png");*/
 
                 currentDirection = dir;
                 connection.send({Type: MessageTypes.Command, Data: { playerId: playerId, direction: dir }});
