@@ -34,23 +34,17 @@
             }
 
             .arrow-key {
-                background-size: 100%;
                 position: absolute;
                 width: 45%;
                 height: 45%;
                 color: rgba(0,0,0,0);
                 border: none;
-                background-color: transparent;
             }
 
-            #button-left { top: 27%; background-image: url("assets/controller/but_left.png"); }
-            #button-left:hover { background-image: url("assets/controller/but_left_active.png"); }
-            #button-right { top: 27%; left: 54%; background-image: url("assets/controller/but_right.png"); }
-            #button-right:hover { background-image: url("assets/controller/but_right_active.png"); }
-            #button-up { left: 27%; background-image: url("assets/controller/but_up.png"); }
-            #button-up:hover { background-image: url("assets/controller/but_up_active.png"); }
-            #button-down { left: 27%; top: 54%; background-image: url("assets/controller/but_down.png"); }
-            #button-down:hover { background-image: url("assets/controller/but_down_active.png"); }
+            #button-left { top: 27%; } 
+            #button-right { top: 27%; left: 54%; }
+            #button-up { left: 27%; }
+            #button-down { left: 27%; top: 54%; }
 
             .hidden { display: none; }
         </style>
@@ -77,10 +71,10 @@
 
             <div id="button-screen" class="ahidden">
                 <div id="dpad">
-                    <button id="button-left" class="arrow-key">Left</button>
-                    <button id="button-up" class="arrow-key">Up</button>
-                    <button id="button-down" class="arrow-key">Down</button>
-                    <button id="button-right" class="arrow-key">Right</button>
+                    <img id="button-left" class="arrow-key" src="assets/controller/but_left.png" />
+                    <img id="button-up" class="arrow-key" src="assets/controller/but_up.png" />
+                    <img id="button-down" class="arrow-key" src="assets/controller/but_down.png" />
+                    <img id="button-right" class="arrow-key" src="assets/controller/but_right.png" />
                 </div>
             </div>
         </div>
@@ -88,8 +82,6 @@
 		<script type="text/javascript">
             "use strict";
 			
-            return;
-
 			let url = CONNECTION_URL;
             let connection = null;
 
@@ -107,10 +99,21 @@
             let buttonLeft = document.querySelector("#button-left");
             let buttonRight = document.querySelector("#button-right");
 
-
             let playerId = null;
             let startDateTime = null;
             let currentDirection = null;
+
+            buttonLeft.addEventListener("mouseover", function(x) { buttonLeft.src = "assets/controller/but_left_active.png"; });
+            buttonLeft.addEventListener("mouseout", function(x) { buttonLeft.src = "assets/controller/but_left.png"; });
+
+            buttonUp.addEventListener("mouseover", function(x) { buttonUp.src = "assets/controller/but_up_active.png"; });
+            buttonUp.addEventListener("mouseout", function(x) { buttonUp.src = "assets/controller/but_up.png"; });
+
+            buttonDown.addEventListener("mouseover", function(x) { buttonDown.src = "assets/controller/but_down_active.png"; });
+            buttonDown.addEventListener("mouseout", function(x) { buttonDown.src = "assets/controller/but_down.png"; });
+
+            buttonRight.addEventListener("mouseover", function(x) { buttonRight.src = "assets/controller/but_right_active.png"; });
+            buttonRight.addEventListener("mouseout", function(x) { buttonRight.src = "assets/controller/but_right.png"; });
 
             function startCountDown(msg) {
                 startScreen.classList.add("hidden");
