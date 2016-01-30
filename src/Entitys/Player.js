@@ -1,17 +1,19 @@
 "use strict";
 
-//charX is the X location on the game grid
-//charY is the Y location on the game grid
+<<<<<<< HEAD
+//x is the X location on the game grid
+//y is the Y location on the game grid
 //maxX is the width of the game grid
 //maxY is the height of the game grid
 //scale is the pixels per game grid
 //size is the number of squares in the grid a player covers in the vertical or horizontal directions
 
-function Player(ID, charX, charY, maxX, maxY, scale, sizeX, sizeY, sprite){
-	this.ID = ID;
-	this.charX = charX;
-	this.charY = charY;
-	this.movedirection = 0;
+
+function Player(id, x, y, maxX, maxY, scale, sizeX, sizeY, sprite){
+	this.id = id;
+	this.x = x;
+	this.y = y;
+	this.moveDirection = 0;
 	this.sprite = sprite;
 	this.mapMaxWidth = maxX;
 	this.mapMaxHeight = maxY;
@@ -21,16 +23,15 @@ function Player(ID, charX, charY, maxX, maxY, scale, sizeX, sizeY, sprite){
 	this.peasantCount = 0;
 	
 	this.events = [
-        //{ type: 'keydown', action: this.interpKeyPress.bind(this)}
+        { type: 'player-command', filter: (function(x) { return x.data.playerId == this.id }).bind(this), action: this.onInput.bind(this) }
     ];
-	
 }
 
 
 Player.prototype = Object.create(EntityBase.prototype);
 Player.prototype.constructor = Player;
 /*
-movedirection
+moveDirection
 0 - stationary
 1 - up
 2 - right
@@ -40,47 +41,35 @@ movedirection
 
 //Engine functions
 Player.prototype.draw = function(ctx){
-	ctx.drawImage(this.sprite, this.charX * this.scale, this.charY * this.scale);
+	ctx.drawImage(this.sprite, this.x * this.scale, this.y * this.scale);
 }
 
 
 Player.prototype.update = function(timestamp){
-	switch(this.movedirection){
+	switch(this.moveDirection){
 		case 1: //Up
-			this.charY -= 1;
-			if(this.charY <= 0) this.charY = 0;
+			this.y -= 1;
+			if(this.y <= 0) this.y = 0;
 			break;
 		case 2: //Right
-			this.charX += 1;
-			if((this.charX + this.sizeX) >= this.mapMaxWidth) this.charX = this.mapMaxWidth - this.sizeX;
+			this.x += 1;
+			if((this.x + this.sizeX) >= this.mapMaxWidth) this.x = this.mapMaxWidth - this.sizeX;
 			break;
 		case 3: //Down
-			this.charY += 1;
-			if((this.charY + this.sizeY) >= this.mapMaxHeight) this.charY = this.mapMaxHeight- this.sizeY;
+			this.y += 1;
+			if((this.y + this.sizeY) >= this.mapMaxHeight) this.y = this.mapMaxHeight- this.sizeY;
 			break;
 		case 4:	//Left
-			this.charX -= 1;
-			if(this.charX <= 0) this.charX =0;
+			this.x -= 1;
+			if(this.x <= 0) this.x =0;
 			break;
 		default:
 			break;
 	}
 }
-//Movement
-Player.prototype.changeDirectionUp = function(){
-	this.movedirection = 1;
-}
 
-Player.prototype.changeDirectionRight = function(){
-	this.movedirection = 2;
-}
-
-Player.prototype.changeDirectionDown = function(){
-	this.movedirection = 3;
-}
-
-Player.prototype.changeDirectionLeft = function(){
-	this.movedirection = 4;
+Player.prototype.onInput = function(event) {
+    this.moveDirection = event.data.direction;
 }
 
 //Game functions
