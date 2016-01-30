@@ -8,4 +8,5 @@ let MessageTypes = {
     Disconnected: 4,
     PlayerIdAssigned: 5,
     StartTimer: 6,
+	FlavourKey: 7,
 };
