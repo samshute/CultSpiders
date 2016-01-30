@@ -17,7 +17,7 @@ function TestStage(connection, playerCount) {
         new Player(3, this.maxMapX - Util.Sprites.get('player3').width/this.scale - offset, this.maxMapY - Util.Sprites.get('player4').height/this.scale - offset, this.maxMapX, this.maxMapY, this.scale, Util.Sprites.get('player4'))
     ].splice(0, playerCount);
 	
-    offset = 11;
+    offset = 12;
 
     this.homeList = [
         new Home(0, offset,  offset, this.scale, Util.Sprites.get('home1')),
