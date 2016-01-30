@@ -20,6 +20,7 @@ function TestStage(connection, playerCount) {
     connection.onReceive = this.onRecieve.bind(this);
 
 	this.baseMan = new baseManager(this.maxMapX, this.maxMapY, this.scale, 8, 5);
+	this.sacMan = new sacrificeManager(this.scale, sacSizeX, sacSizeY);
 }
 
 TestStage.prototype = Object.create(StageBase.prototype);
@@ -33,6 +34,7 @@ TestStage.prototype.update = function(timestamp) {
        entity.update(timestamp);
    
 	//Update Bases
+	this.baseMan.update(timestamp, this.PlayersList);
 	this.baseMan.update(timestamp, this.PlayersList);
 	
 }

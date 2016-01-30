@@ -1,13 +1,17 @@
 "use strict";
 
 function Game(targetElement, width, height) {
+	
     // Create canvas to draw
     this.canvas = window.document.createElement("canvas");
     this.canvas.id = "game-canvas";
     this.canvas.width = width;
     this.canvas.height = height; 
     targetElement.appendChild(this.canvas);
-
+	
+	
+	
+	
     // Configure drawing context
     this.ctx = this.canvas.getContext('2d');
     this.ctx.imageSmoothingEnabled = true;

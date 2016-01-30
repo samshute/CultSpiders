@@ -15,3 +15,7 @@ function Sacrifice(charX, charY, maxX, maxY, scale, sizeX, sizeY, sprite, follow
 Sacrifice.prototype.changeFollowing = function(following){
 	this.following = following;
 }
+
+Sacrifice.prototype.update(timestep){
+	
+}

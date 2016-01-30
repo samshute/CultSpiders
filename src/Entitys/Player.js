@@ -1,6 +1,5 @@
 "use strict";
 
-<<<<<<< HEAD
 //x is the X location on the game grid
 //y is the Y location on the game grid
 //maxX is the width of the game grid

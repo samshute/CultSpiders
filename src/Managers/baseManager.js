@@ -50,8 +50,8 @@ baseManager.prototype.update = function(timestamp, playersList){
 	for(let playa of playersList){
 		for(var index = 0; index < this.baseList.length; index ++ ){
 			var base = this.baseList[index];
-			if(playa.charX + playa.sizeX > base.charX  && playa.charX < base.charX+ base.baseSize){//Horizontal position
-				if(playa.charY + playa.sizeY > base.charY  && playa.charY < base.charY+ base.baseSize){ //Veritcal position
+			if(playa.x + playa.sizeX > base.x  && playa.x < base.x+ base.baseSize){//Horizontal position
+				if(playa.y + playa.sizeY > base.y  && playa.y < base.y+ base.baseSize){ //Veritcal position
 					playa.addPeasant();
 					this.baseList.splice(index, 1);
 					this.baseCount--;
