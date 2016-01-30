@@ -4,7 +4,7 @@
 //scale = pixels per square
 //baseSize = base width and height in squares, not in pixels
 //maxBaseCount
-function baseManager(width, height, scale, baseSize, maxBaseCount){
+function baseManager(stage, width, height, scale, baseSize, maxBaseCount){
 	this.baseList = [
     ];
 	this.timeOfLastBaseSpawn = 0;
@@ -14,6 +14,7 @@ function baseManager(width, height, scale, baseSize, maxBaseCount){
 	this.baseSize = baseSize;
 	this.baseCount = 0;
 	this.maxbaseCount = maxBaseCount;
+	this.stage = stage;
 }
 
 baseManager.prototype.spawnNewBase = function(){
@@ -52,7 +53,9 @@ baseManager.prototype.update = function(timestamp, playersList){
 			var base = this.baseList[index];
 			if(playa.x + playa.sizeX > base.x  && playa.x < base.x+ base.baseSize){//Horizontal position
 				if(playa.y + playa.sizeY > base.y  && playa.y < base.y+ base.baseSize){ //Veritcal position
-					playa.addPeasant();
+					var newSacrifice = new Sacrifice(base.x, base.y, this.mapMaxWidth, this.mapMaxHeight, this.scale, Util.Sprites.get('sacrifice' + Math.floor((Math.random() * 13 + 1))), playa, null);
+					playa.addSacrifice(newSacrifice);
+					//this.stage.sacMan.addSacrifice(newSacrifice);
 					this.baseList.splice(index, 1);
 					this.baseCount--;
 				}
@@ -68,4 +71,4 @@ baseManager.prototype.update = function(timestamp, playersList){
 	
 }
 
-Util.Sprites.preload('base', 'assets/sprites/House.png');
+Util.Sprites.preload('base', 'assets/buildings/dwelling_01.png');

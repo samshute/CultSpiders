@@ -3,28 +3,15 @@
 function SacrificeManager(scale, sacSizeX, sacSizeY){
 	this.sacList = [];
 	this.scale = scale;
-	this.sacSizeX = sacSizeX;
-	this.sacSizeY = sacSizeY;
 }
 
-baseManager.prototype.draw = function (ctx){
+SacrificeManager.prototype.draw = function (ctx){
 	for(let entity of this.sacList)
         entity.draw(ctx);
 }
 
-baseManager.prototype.update = function(timestamp, playersList){
+SacrificeManager.prototype.update = function(timestamp, playersList){
 	
-	//Spawn new base if:
-	//one hasn't been spawned in the last 10 seconds 
-	//and there arent the maximum number of allowed bases
-	if(this.timeOfLastBaseSpawn + 10000 < timestamp && this.baseCount < this.maxbaseCount){
-		//Add the new base
-		this.spawnNewBase();
-		this.baseCount++;
-		//Reset the time counter
-		this.timeOfLastBaseSpawn = timestamp;
-		
-	}
 	//Detect Collisions with Players
 	for(let playa of playersList){
 		for(var index = 0; index < this.baseList.length; index ++ ){
@@ -45,4 +32,8 @@ baseManager.prototype.update = function(timestamp, playersList){
         entity.update(timestamp);
 	
 	
+}
+
+SacrificeManager.prototype.addSacrifice(newSacrifice){
+	sacList.push(newSacrifice);
 }

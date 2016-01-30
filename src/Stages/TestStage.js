@@ -9,18 +9,19 @@ function TestStage(connection, playerCount) {
     this.connection = connection;
 
     this.PlayersList = [
-		new Player(0, 0, 0, this.maxMapX, this.maxMapY, this.scale, 4, 8, Util.Sprites.get('player1')), 	//Player 1
-		new Player(1, 0, 32, this.maxMapX, this.maxMapY, this.scale, 4, 8, Util.Sprites.get('player2'))	//Player 2
     ];
-
+	
+	if(playerCount>=1)this.PlayersList.push(new Player(0, 0,  0, this.maxMapX, this.maxMapY, this.scale, Util.Sprites.get('player1'))); //Player 1
+	if(playerCount>=2)this.PlayersList.push(new Player(1, 0, this.maxMapY - Util.Sprites.get('player2').height/this.scale, this.maxMapX, this.maxMapY, this.scale, Util.Sprites.get('player2')));	//Player 2
+	if(playerCount>=3)this.PlayersList.push(new Player(2, this.maxMapX - Util.Sprites.get('player3').width/this.scale, 0, this.maxMapX, this.maxMapY, this.scale, Util.Sprites.get('player3')));	//Player 3
+	if(playerCount>=4)this.PlayersList.push(new Player(3, this.maxMapX - Util.Sprites.get('player3').width/this.scale, this.maxMapY - Util.Sprites.get('player4').height/this.scale, this.maxMapX, this.maxMapY, this.scale, Util.Sprites.get('player4')));	//Player 4
     for(let entity of this.PlayersList) {
         this.eventQueue.bind(entity);
     }
 
     connection.onReceive = this.onRecieve.bind(this);
 
-	this.baseMan = new baseManager(this.maxMapX, this.maxMapY, this.scale, 8, 5);
-	this.sacMan = new sacrificeManager(this.scale, sacSizeX, sacSizeY);
+	this.baseMan = new baseManager(this, this.maxMapX, this.maxMapY, this.scale, 8, 5);
 }
 
 TestStage.prototype = Object.create(StageBase.prototype);
@@ -54,4 +55,7 @@ TestStage.prototype.draw = function(ctx) {
 //Player Sprites
 Util.Sprites.preload('player1', 'assets/sprites/viking_1.png');
 Util.Sprites.preload('player2', 'assets/sprites/viking_2.png');
+Util.Sprites.preload('player3', 'assets/sprites/viking_3.png');
+Util.Sprites.preload('player4', 'assets/sprites/viking_4.png');
+
 

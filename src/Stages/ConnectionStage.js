@@ -18,7 +18,7 @@ ConnectionStage.prototype.constructor = ConnectionStage;
 
 ConnectionStage.prototype.update = function(timestamp) {
     if (this.startTime !== null && new Date().getTime() > this.startTime) {
-        Game.changeStage(new TestStage(this.connection));
+        Game.changeStage(new TestStage(this.connection, this.connections.length));
     }
 }
 
