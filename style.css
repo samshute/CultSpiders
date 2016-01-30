@@ -4,7 +4,7 @@ body {
     display: table;
     width: 100%;
     height: 100%;
-	background-image: url('assets/backgrounds/background.jpg');
+	background-image: url('assets/backgrounds/background_island_bigger.jpg');
 }
 
 #loading-container {

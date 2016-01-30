@@ -14,7 +14,9 @@
                 
             }
 
-            #loading-screen {
+            #loading-screen img {
+                width: 100px;
+                height: 100px;
             }
 
             body { 
@@ -53,6 +55,18 @@
                 border: none;
             }
 
+            #connect-screen {
+               width: 50%;
+               height: 65%;
+               margin: 15% auto;
+            }
+
+            #connect-button { 
+                width: 100%;
+                height: auto;
+            }
+
+
             #button-left { top: 27%; } 
             #button-right { top: 27%; left: 54%; }
             #button-up { left: 27%; }
@@ -68,7 +82,7 @@
 	<body>
         <div id="page-container">
             <div id="connect-screen" class="nothidden">
-                <button id="connect-button">Connect</button>
+                <img id="connect-button" src="assets/controller/but_connect.png" />
             </div>
 
             <div id="loading-screen" class="hidden">

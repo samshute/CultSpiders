@@ -51,19 +51,19 @@ Player.prototype.update = function(timestamp){
 	switch(this.moveDirection){
 		case 1: //Up
 			this.y -= 1;
-			if(this.y <= 0) this.y = 0;
+			if(this.y * this.scale <= Util.BackgroundEdges.minY[this.x * this.scale]) this.y = Util.BackgroundEdges.minY[this.x * this.scale] / this.scale;
 			break;
 		case 2: //Right
 			this.x += 1;
-			if((this.x + this.sizeX) >= this.mapMaxWidth) this.x = this.mapMaxWidth - this.sizeX;
+			if((this.x + this.sizeX) * this.scale >= Util.BackgroundEdges.maxX[this.y * this.scale]) this.x = (Util.BackgroundEdges.maxX[this.y * this.scale] / this.scale) - this.sizeX;
 			break;
 		case 3: //Down
 			this.y += 1;
-			if((this.y + this.sizeY) >= this.mapMaxHeight) this.y = this.mapMaxHeight- this.sizeY;
+            if((this.y + this.sizeY) * this.scale >= Util.BackgroundEdges.maxY[this.x * this.scale]) this.y = (Util.BackgroundEdges.maxY[this.x * this.scale] / this.scale) - this.sizeY;
 			break;
 		case 4:	//Left
 			this.x -= 1;
-			if(this.x <= 0) this.x =0;
+			if(this.x * this.scale <= Util.BackgroundEdges.minX[this.y * this.scale]) this.x = Util.BackgroundEdges.minX[this.y * this.scale] / this.scale;
 			break;
 		default:
 			break;
