@@ -2,7 +2,8 @@
 	<head>
 		<title> CONTROLLER YO </title>
 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0,  minimum-scale=1.0">  
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-sacle=1, maximum-scale=1, user-scalable=no">
+
         <script type="text/javascript" src="src\Util\MessageTypes.js"></script>
         <script type="text/javascript" src="src\Util\Connection.js"></script>
 
@@ -18,6 +19,10 @@
 
             body { 
                 height: 100%;
+                width:100%;
+                overflow:hidden;
+                overflow-x: hidden;
+                overflow-y: hidden;
             }
 
             .button-screen {
@@ -103,17 +108,33 @@
             let startDateTime = null;
             let currentDirection = null;
 
+            document.body.addEventListener('touchmove', function(e){ e.preventDefault(); });
+            window.addEventListener("scroll",function(){ window.scrollTo(0,0) },false)
+            window.addEventListener("load",function() {
+                // Set a timeout...
+               setTimeout(function(){
+                    // Hide the address bar!
+                    window.scrollTo(0, 1);
+                }, 1);
+            });
+
             buttonLeft.addEventListener("mouseover", function(x) { buttonLeft.src = "assets/controller/but_left_active.png"; });
             buttonLeft.addEventListener("mouseout", function(x) { buttonLeft.src = "assets/controller/but_left.png"; });
-
             buttonUp.addEventListener("mouseover", function(x) { buttonUp.src = "assets/controller/but_up_active.png"; });
             buttonUp.addEventListener("mouseout", function(x) { buttonUp.src = "assets/controller/but_up.png"; });
-
             buttonDown.addEventListener("mouseover", function(x) { buttonDown.src = "assets/controller/but_down_active.png"; });
             buttonDown.addEventListener("mouseout", function(x) { buttonDown.src = "assets/controller/but_down.png"; });
-
             buttonRight.addEventListener("mouseover", function(x) { buttonRight.src = "assets/controller/but_right_active.png"; });
             buttonRight.addEventListener("mouseout", function(x) { buttonRight.src = "assets/controller/but_right.png"; });
+
+            buttonLeft.addEventListener("touchstart", function(x) { buttonLeft.src = "assets/controller/but_left_active.png"; });
+            buttonLeft.addEventListener("touchend", function(x) { buttonLeft.src = "assets/controller/but_left.png"; });
+            buttonUp.addEventListener("touchstart", function(x) { buttonUp.src = "assets/controller/but_up_active.png"; });
+            buttonUp.addEventListener("touchend", function(x) { buttonUp.src = "assets/controller/but_up.png"; });
+            buttonDown.addEventListener("touchstart", function(x) { buttonDown.src = "assets/controller/but_down_active.png"; });
+            buttonDown.addEventListener("touchend", function(x) { buttonDown.src = "assets/controller/but_down.png"; });
+            buttonRight.addEventListener("touchstart", function(x) { buttonRight.src = "assets/controller/but_right_active.png"; });
+            buttonRight.addEventListener("touchend", function(x) { buttonRight.src = "assets/controller/but_right.png"; });
 
             function startCountDown(msg) {
                 startScreen.classList.add("hidden");
@@ -187,14 +208,6 @@
 
                 startScreen.classList.remove("hidden");
             });    
-
-            window.addEventListener("load",function() {
-                // Set a timeout...
-               setTimeout(function(){
-                    // Hide the address bar!
-                    window.scrollTo(0, 1);
-                }, 1);
-            });
 
 		</script>
 	</body>
