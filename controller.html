@@ -2,18 +2,43 @@
 	<head>
 		<title> CONTROLLER YO </title>
 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0,  minimum-scale=1.0">  
         <script type="text/javascript" src="src\Util\MessageTypes.js"></script>
         <script type="text/javascript" src="src\Util\Connection.js"></script>
 
         <style type="text/css">
             #page-container { }
 
-            #controller-view {
+            #button-view {
                 
             }
 
             #loading-screen {
             }
+
+            body { 
+                height: 100%;
+            }
+
+            .arrow-key {
+                background-repeat: no-repeat;
+                width: 256px;
+                height: 256px;
+                color: rgba(0,0,0,0);
+                border: none;
+                background-color: transparent;
+            }
+
+            #button-left { background-image: url("assets/controller/but_left.png"); }
+            #button-left:hover { background-image: url("assets/controller/but_left_active.png"); }
+            #button-right { background-image: url("assets/controller/but_right.png"); }
+            #button-right:hover { background-image: url("assets/controller/but_right_active.png"); }
+            #button-up { background-image: url("assets/controller/but_up.png"); }
+            #button-up:hover { background-image: url("assets/controller/but_up_active.png"); }
+            #button-down { background-image: url("assets/controller/but_down.png"); }
+            #button-down:hover { background-image: url("assets/controller/but_down_active.png"); }
+
+            
 
             .hidden { display: none; }
         </style>
@@ -21,7 +46,7 @@
 
 	<body>
         <div id="page-container">
-            <div id="connect-screen">
+            <div id="connect-screen" class="hidden">
                 <button id="connect-button">Connect</button>
             </div>
 
@@ -38,17 +63,19 @@
                 Game Beginning!!
             </div>
 
-            <div id="controller-screen" class="hidden">
-                <button id="control-left">Left</button>
-                <button id="control-up">Up</button>
-                <button id="control-down">Down</button>
-                <button id="control-right">Right</button>
+            <div id="button-screen" class="ahidden">
+                <button id="button-left" class="arrow-key">Left</button>
+                <button id="button-up" class="arrow-key">Up</button>
+                <button id="button-down" class="arrow-key">Down</button>
+                <button id="button-right" class="arrow-key">Right</button>
             </div>
         </div>
 
 		<script type="text/javascript">
             "use strict";
 			
+            return;
+
 			let url = CONNECTION_URL;
             let connection = null;
 
@@ -59,12 +86,13 @@
             let startScreen = document.querySelector("#start-screen");
             let loadingScreen = document.querySelector("#loading-screen");
             let countDownTime = document.querySelector("#countdown-screen");
-            let controllerScreen = document.querySelector("#controller-screen");
+            let controllerScreen = document.querySelector("#button-screen");
 
-            let buttonUp = document.querySelector("#control-up");
-            let buttonDown = document.querySelector("#control-down");
-            let buttonLeft = document.querySelector("#control-left");
-            let buttonRight = document.querySelector("#control-right");
+            let buttonUp = document.querySelector("#button-up");
+            let buttonDown = document.querySelector("#button-down");
+            let buttonLeft = document.querySelector("#button-left");
+            let buttonRight = document.querySelector("#button-right");
+
 
             let playerId = null;
             let startDateTime = null;
@@ -142,6 +170,15 @@
 
                 startScreen.classList.remove("hidden");
             });    
+
+            window.addEventListener("load",function() {
+                // Set a timeout...
+               setTimeout(function(){
+                    // Hide the address bar!
+                    window.scrollTo(0, 1);
+                }, 1);
+            });
+
 		</script>
 	</body>
 </html>
