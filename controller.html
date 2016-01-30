@@ -57,7 +57,7 @@
 
 	<body>
         <div id="page-container">
-            <div id="connect-screen" class="nothidden">
+            <div id="connect-screen" class="hidden">
                 <button id="connect-button">Connect</button>
             </div>
 
@@ -74,7 +74,7 @@
                 Game Beginning!!
             </div>
 
-            <div id="button-screen" class="hidden">
+            <div id="button-screen" class="nothidden">
                 <div id="dpad">
                     <img id="button-left" class="arrow-key" src="assets/controller/but_left.png" />
                     <img id="button-up" class="arrow-key" src="assets/controller/but_up.png" />
@@ -118,24 +118,6 @@
                 }, 1);
             });
 
-            buttonLeft.addEventListener("mouseover", function(x) { buttonLeft.src = "assets/controller/but_left_active.png"; });
-            buttonLeft.addEventListener("mouseout", function(x) { buttonLeft.src = "assets/controller/but_left.png"; });
-            buttonUp.addEventListener("mouseover", function(x) { buttonUp.src = "assets/controller/but_up_active.png"; });
-            buttonUp.addEventListener("mouseout", function(x) { buttonUp.src = "assets/controller/but_up.png"; });
-            buttonDown.addEventListener("mouseover", function(x) { buttonDown.src = "assets/controller/but_down_active.png"; });
-            buttonDown.addEventListener("mouseout", function(x) { buttonDown.src = "assets/controller/but_down.png"; });
-            buttonRight.addEventListener("mouseover", function(x) { buttonRight.src = "assets/controller/but_right_active.png"; });
-            buttonRight.addEventListener("mouseout", function(x) { buttonRight.src = "assets/controller/but_right.png"; });
-
-            buttonLeft.addEventListener("touchstart", function(x) { buttonLeft.src = "assets/controller/but_left_active.png"; });
-            buttonLeft.addEventListener("touchend", function(x) { buttonLeft.src = "assets/controller/but_left.png"; });
-            buttonUp.addEventListener("touchstart", function(x) { buttonUp.src = "assets/controller/but_up_active.png"; });
-            buttonUp.addEventListener("touchend", function(x) { buttonUp.src = "assets/controller/but_up.png"; });
-            buttonDown.addEventListener("touchstart", function(x) { buttonDown.src = "assets/controller/but_down_active.png"; });
-            buttonDown.addEventListener("touchend", function(x) { buttonDown.src = "assets/controller/but_down.png"; });
-            buttonRight.addEventListener("touchstart", function(x) { buttonRight.src = "assets/controller/but_right_active.png"; });
-            buttonRight.addEventListener("touchend", function(x) { buttonRight.src = "assets/controller/but_right.png"; });
-
             function startCountDown(msg) {
                 startScreen.classList.add("hidden");
                 loadingScreen.classList.add("hidden");
@@ -163,15 +145,24 @@
                 countDownTime.classList.add("hidden");
                 controllerScreen.classList.remove("hidden");               
 
-                buttonUp.addEventListener("mousedown", function() { setDirection(1); });
-                buttonRight.addEventListener("mousedown", function() { setDirection(2); });
-                buttonDown.addEventListener("mousedown", function() { setDirection(3); });
-                buttonLeft.addEventListener("mousedown", function() { setDirection(4); });
+                buttonUp.addEventListener("touchstart", function(e) { setDirection(1, e.target); });
+                buttonRight.addEventListener("touchstart", function(e) { setDirection(2, e.target); });
+                buttonDown.addEventListener("touchstart", function(e) { setDirection(3, e.target); });
+                buttonLeft.addEventListener("touchstart", function(e) { setDirection(4, e.target); });
             }
 
-            function setDirection(dir) {
+            function setDirection(dir, elemnt) {
                 if (currentDirection === dir)
                     return;
+
+                window.navigator.vibrate(100);
+
+
+                let allElements = documnet.querySelectorAll("arrow-keys");
+                for(let ele of allElements) 
+                    element.src = element.src.replace("_active.png", ".png");
+
+                element.src = element.src.replace(".png", "_active.png");
 
                 currentDirection = dir;
                 connection.send({Type: MessageTypes.Command, Data: { playerId: playerId, direction: dir }});

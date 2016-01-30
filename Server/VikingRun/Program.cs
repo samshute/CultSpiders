@@ -27,7 +27,7 @@ namespace VikingRun
                 OnConnect = OnConnect,
                 OnReceive = OnReceive,
                 OnDisconnect = OnDisconnect,
-                TimeOut = new TimeSpan(0, 5, 0)
+                TimeOut = new TimeSpan(0, 50, 0)
             }.Start();
 
             Console.WriteLine("Server listening on: " + port);
