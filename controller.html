@@ -77,31 +77,30 @@
 
                 startDateTime = new Date(msg.Data.Time);
 
-                setInterval(continueCountDown, 1000);
+                setInterval(continueCountDown, 800);
             }
 
             function continueCountDown() {
-                clearInterval(continueCountDown);
 
                 var currentDateTime = new Date();
                 var span = (startDateTime.getTime() - currentDateTime.getTime()) / 1000;
 
                 countDownTime.innerText = Math.ceil(span);
 
-                if (span <= 0)
+                if (span <= 0) {
+                    clearInterval(continueCountDown);
                     startGame();
-                else
-                    setInterval(continueCountDown, 500);
+                }
             }
 
             function startGame() {
                 countDownTime.classList.add("hidden");
                 controllerScreen.classList.remove("hidden");               
 
-                buttonUp.addEventListener("mousedown", function() { setDirection(0); });
-                buttonRight.addEventListener("mousedown", function() { setDirection(1); });
-                buttonLeft.addEventListener("mousedown", function() { setDirection(3); });
-                buttonDown.addEventListener("mousedown", function() { setDirection(2); });
+                buttonUp.addEventListener("mousedown", function() { setDirection(1); });
+                buttonRight.addEventListener("mousedown", function() { setDirection(2); });
+                buttonDown.addEventListener("mousedown", function() { setDirection(3); });
+                buttonLeft.addEventListener("mousedown", function() { setDirection(4); });
             }
 
             function setDirection(dir) {
@@ -109,7 +108,7 @@
                     return;
 
                 currentDirection = dir;
-                connection.send({Type: MessageTypes.Command, Data: { PlayerId: playerId, Direction: dir }});
+                connection.send({Type: MessageTypes.Command, Data: { playerId: playerId, direction: dir }});
             }
 
             connectButton.addEventListener("click", function() {
@@ -120,19 +119,19 @@
                     onConnect: function(event) {  
                         connection.send({ Type: MessageTypes.RegisterTalk });
                     },
-                    onReceive: function(data) {
-                        if (data.Type != MessageTypes.PlayerIdAssigned)
+                    onReceive: function(msg) {
+                        if (msg.Type != MessageTypes.PlayerIdAssigned)
                             throw "Received wrong message, this is a problem.";
 
-                        playerId = data.Id;
+                        playerId = msg.Data.Id;
 
                         startScreen.classList.remove("hidden");
 
-                        connection.onReceive = function(data) {
-                            if (data.Type != MessageTypes.StartTimer)
+                        connection.onReceive = function(msg) {
+                            if (msg.Type != MessageTypes.StartTimer)
                                 throw "Received wrong message, this is a problem.";
 
-                            startCountDown(data);
+                            startCountDown(msg);
                         }
                     },
                 })

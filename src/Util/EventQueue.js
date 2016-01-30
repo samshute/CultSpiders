@@ -33,8 +33,6 @@ EventQueue.prototype.broadcast = function() {
     while(this.queue.length) {
         let event = this.queue.shift();
 
-		console.log(event.type + " " + event.keyCode);
-		
         for(let listener of this.listeners) {
             if (listener.type !== event.type)
                 continue;

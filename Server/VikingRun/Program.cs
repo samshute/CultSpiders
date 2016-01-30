@@ -47,7 +47,13 @@ namespace VikingRun
             if (presenter != null && presenter.ClientAddress == context.ClientAddress)
             {
                 Console.WriteLine("Oh shit we lost the tv.");
-                throw new Exception("FUCK - tv out");
+
+                // Reset everything.
+                // Fuck this whole thing needs to be rewritten
+                presenter = null;
+                acceptingPlayers = true;
+                players.ForEach(x => x.Send(JsonConvert.SerializeObject(new { Type = CommandType.End }), false, true));
+                players.Clear();
             }
 
             //throw new Exception("Yeah nar we don't handle disconnects");
@@ -152,6 +158,7 @@ namespace VikingRun
             Disconnected = 4,
             PlayerIdAssigned = 5,
             StartTimer = 6,
+            End = 7,
         }
     }
 }

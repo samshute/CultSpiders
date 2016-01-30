@@ -18,7 +18,7 @@ ConnectionStage.prototype.constructor = ConnectionStage;
 
 ConnectionStage.prototype.update = function(timestamp) {
     if (this.startTime !== null && new Date().getTime() > this.startTime) {
-        Game.changeStage(new TestStage());
+        Game.changeStage(new TestStage(this.connection));
     }
 }
 
@@ -47,7 +47,5 @@ ConnectionStage.prototype.onReceive = function(msg) {
     if (msg.Type == MessageTypes.RegisterTalk)
         this.connections.push("placeholder name");
     else if (msg.Type == MessageTypes.StartTimer) 
-    {
         this.startTime = new Date(msg.Data.Time).getTime();
-    }
 }

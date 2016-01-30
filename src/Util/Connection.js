@@ -1,6 +1,7 @@
 "use strict";
 
-let CONNECTION_URL = "ws://127.0.0.1:6969/game";
+// let CONNECTION_URL = "ws://127.0.0.1:6969/game";
+let CONNECTION_URL = "ws://54.206.33.185:6969/game";
 
 function Connection(url, opts) {
     this.connected = false;

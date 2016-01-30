@@ -1,25 +1,24 @@
 "use strict";
 
-function TestStage() {
+function TestStage(connection, playerCount) {
     StageBase.call(this);
 	this.maxMapX = 128;
 	this.maxMapY = 128;
 	this.scale = 8;
     this.eventQueue = new EventQueue();
+    this.connection = connection;
 
     this.entities = [
-	new Player(1, 0, 0, this.maxMapX, this.maxMapY, this.scale, 64, Util.Sprites.get('player1')), 	//Player 1
-	new Player(2, 0, 32, this.maxMapX, this.maxMapY, this.scale, 64, Util.Sprites.get('player2'))	//Player 2
+	    new Player(0, 0, 0, this.maxMapX, this.maxMapY, this.scale, 64, Util.Sprites.get('player1')), 	//Player 1
+	    new Player(1, 0, 32, this.maxMapX, this.maxMapY, this.scale, 64, Util.Sprites.get('player2'))	//Player 2
     ];
 
     for(let entity of this.entities) {
         this.eventQueue.bind(entity);
     }
 
-    window.addEventListener('keydown', (function(e) { this.eventQueue.enqueue(e); }).bind(this));
-	window.addEventListener('keydown', this.interpKeyPress.bind(this));
-    window.addEventListener('keyup', (function(e) { this.eventQueue.enqueue(e); }).bind(this));
-	
+    connection.onReceive = this.onRecieve.bind(this);
+
 	this.baseMan = new baseManager(this.maxMapX, this.maxMapY, this.scale, 16);
 }
 
@@ -35,19 +34,21 @@ TestStage.prototype.update = function(timestamp) {
        entity.update(timestamp);
 }
 
+TestStage.prototype.onRecieve = function(msg) {
+    if (msg.Type === MessageTypes.Command)
+        this.eventQueue.enqueue({ type: 'player-command', data: msg.Data });
+}
+
 TestStage.prototype.draw = function(ctx) {
     this.baseMan.draw(ctx);
 	
 	for(let entity of this.entities)
         entity.draw(ctx);
-	
-	
 }
 
 //Player Sprites
 Util.Sprites.preload('player1', 'assets/sprites/p1.png');
 Util.Sprites.preload('player2', 'assets/sprites/p2.png');
-
 
 //Player Controls	TO BE REPLACED WITH PHONE CONTROLS LATER
 TestStage.prototype.interpKeyPress = function(event){
