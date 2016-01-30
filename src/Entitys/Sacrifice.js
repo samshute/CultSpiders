@@ -26,7 +26,7 @@ Sacrifice.prototype.changeFollower = function(follower){
 
 Sacrifice.prototype.update = function(timestep){
 	//Check if collided with a player
-	for(let playa of Game.currentStage.PlayersList){
+	for(let playa of Game.currentStage.playerList){
 		if(playa != this.head){
 			if(playa.x + playa.sizeX > this.x  && playa.x < this.x+ this.sizeX){//Horizontal position
 				if(playa.y + playa.sizeY > this.y  && playa.y < this.y+ this.sizeY){ //Veritcal position
@@ -37,8 +37,6 @@ Sacrifice.prototype.update = function(timestep){
 			}
 		}
 	}
-	
-	
 	
 	//Move towards following
 	var hor = 0;	//stay the same horizontally
