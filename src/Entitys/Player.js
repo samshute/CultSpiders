@@ -13,14 +13,15 @@ function Player(id, x, y, maxX, maxY, scale, sprite){
 	this.x = x;
 	this.y = y;
 	this.moveDirection = 0;
+	this.speed;
 	this.sprite = sprite;
 	this.mapMaxWidth = maxX;
 	this.mapMaxHeight = maxY;
 	this.scale = scale;
 	this.sizeX = 32/scale;
 	this.sizeY = 64/scale;
-	this.peasantCount = 0;
 	this.follower;
+	this.timeLastSacrifice = 0;
 	
 	this.events = [
         { type: 'player-command', filter: (function(x) { return x.data.playerId == this.id }).bind(this), action: this.onInput.bind(this) }
@@ -71,14 +72,18 @@ Player.prototype.update = function(timestamp){
 }
 
 Player.prototype.onInput = function(event) {
-    this.moveDirection = event.data.direction;
+    this.changeMoveDirection(event.data.direction);
+	
+}
+
+Player.prototype.changeMoveDirection = function(direction){
+	this.moveDirection = direction;
 	if(this.follower != null)this.follower.addMove(this.x, this.y)
 }
 
 //Game functions
 
 Player.prototype.addSacrifice = function(newSacrifice){
-	this.peasantCount ++;
 	newSacrifice.head = this;
 	if(this.follower == null){
 		this.follower = newSacrifice;
@@ -102,8 +107,7 @@ Util.Sprites.preload('sacrifice11', 'assets/sprites/Sacrifices/sacrifice_11.png'
 Util.Sprites.preload('sacrifice12', 'assets/sprites/Sacrifices/sacrifice_12.png');
 Util.Sprites.preload('sacrifice13', 'assets/sprites/Sacrifices/sacrifice_13_swagadiah.png');
 
-Player.prototype.removePeasants = function(numPesToRemove){
-	this.peasantCount -= numPesToRemove;
-	if(this.peasantCount < 0)this.peasantCount = 0;
+Player.prototype.performSacrifice = function(x, y){
+	if(this.follower != null)this.follower.performSacrifice(x,y);
 }
 
