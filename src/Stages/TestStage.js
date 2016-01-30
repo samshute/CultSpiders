@@ -59,10 +59,29 @@ TestStage.prototype.update = function(timestamp) {
         if (player.peasentCount == 0)
             continue;
 
-        let dist = (player.x - home.x) * (player.x - home.x) + (player.y - home.y) * (player.y - home.y);
-        if (dist < 100) {
-            this.scoreKeeper.addPoints(player.id, 1);
-            console.log("Do scarifice");
+        let dist = Math.abs((player.x - home.x) * (player.x - home.x)) + Math.abs((player.y - home.y) * (player.y - home.y)); // Change to in bounding box
+        
+		let inside = false;
+		if(	player.x + player.sprite.width/this.scale > home.x &&		//right
+			player.x < home.x + home.sprite.width/this.scale &&			//left
+			player.y + player.sprite.height/this.scale > home.y &&		//bottom
+			player.y < home.y + home.sprite.height/this.scale) inside = true;	//top
+			
+		
+		if (inside) {
+			if(player.x < this.maxMapX/2 && player.moveDirection == 4) player.changeMoveDirection(0);	//left
+			if(player.x > this.maxMapX/2 && player.moveDirection == 2) player.changeMoveDirection(0);	//right
+			if(player.y < this.maxMapY/2 && player.moveDirection == 1) player.changeMoveDirection(0);	//up
+			if(player.y > this.maxMapY/2 && player.moveDirection == 3) player.changeMoveDirection(0);	//down
+			
+			
+			//Perform sacrifice
+			if(player.timeLastSacrifice + 2000 < timestamp && player.follower != null){
+				player.performSacrifice(home.x, home.y)
+				this.scoreKeeper.addPoints(player.id, 1);
+				console.log("Do scarifice");
+				player.timeLastSacrifice = timestamp;
+			}
         }
     }
 
@@ -81,10 +100,12 @@ TestStage.prototype.draw = function(ctx) {
     this.baseMan.draw(ctx);
     this.scoreKeeper.draw(ctx);
 	
-	for (let entity of this.playerList)
-        entity.draw(ctx);
-
+	//Draw houses first so they are at the lowest level
     for (let entity of this.homeList) 
+        entity.draw(ctx);
+	
+	//DRAW PLAYERS SECOND SO THEY ARE ON TOP OF HOUSES
+	for (let entity of this.playerList)
         entity.draw(ctx);
 }
 

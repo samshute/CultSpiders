@@ -53,7 +53,7 @@ baseManager.prototype.update = function(timestamp, playersList){
 			var base = this.baseList[index];
 			if(playa.x + playa.sizeX > base.x  && playa.x < base.x+ base.baseSize){//Horizontal position
 				if(playa.y + playa.sizeY > base.y  && playa.y < base.y+ base.baseSize){ //Veritcal position
-					var newSacrifice = new Sacrifice(base.x, base.y, this.mapMaxWidth, this.mapMaxHeight, this.scale, Util.Sprites.get('sacrifice' + Math.floor((Math.random() * 13 + 1))), playa, null);
+					var newSacrifice = new Sacrifice(base.x, base.y, this.mapMaxWidth, this.mapMaxHeight, this.scale, Util.Sprites.get('sacrifice' + Math.floor((Math.random() * 13 + 1))));
 					playa.addSacrifice(newSacrifice);
 					//this.stage.sacMan.addSacrifice(newSacrifice);
 					this.baseList.splice(index, 1);

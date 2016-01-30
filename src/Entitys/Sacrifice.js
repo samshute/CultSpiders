@@ -1,6 +1,6 @@
 "use strict";
 
-function Sacrifice(x, y, maxX, maxY, scale, sprite, following, follower){
+function Sacrifice(x, y, maxX, maxY, scale, sprite){
 	this.x = x;
 	this.y = y;
 	this.sprite = sprite;
@@ -9,13 +9,17 @@ function Sacrifice(x, y, maxX, maxY, scale, sprite, following, follower){
 	this.scale = scale;
 	this.sizeX = Math.floor(32/scale);
 	this.sizeY = Math.floor(64/scale);
-	this.following = following;
-	this.follower = follower;
+	this.following;
+	this.follower;
 	this.head;
 	this.moveQueue = [];
 }
 
 Sacrifice.prototype.changeFollowing = function(following){
+	if(this.following != null){
+		var audio = new Audio('assets/sounds/headshot.mp3');
+		audio.play();
+	}
 	this.following = following;
 	this.moveQueue = [];
 }
@@ -38,10 +42,11 @@ Sacrifice.prototype.update = function(timestep){
 		}
 	}
 	
-	//Move towards following
+	
 	var hor = 0;	//stay the same horizontally
 	var ver = 0; 	//stay the same vertically
 	if(this.moveQueue.length > 0){
+		//Move through moveQueue
 		if(this.moveQueue[0].x > this.x) hor =1;// go right
 		else if (this.moveQueue[0].x< this.x)hor = -1; //go left
 		if(this.moveQueue[0].y > this.y) ver =1;// go down
@@ -55,7 +60,8 @@ Sacrifice.prototype.update = function(timestep){
 		if((this.x + this.sizeX) >= this.mapMaxWidth) this.x = this.mapMaxWidth - this.sizeX;
 		
 		if(this.moveQueue[0].x == this.x && this.moveQueue[0].y == this.y)this.moveQueue.splice(0,1);
-	}else{
+	}else if(this.following != null){
+		//Move towards following
 		if(this.following.x -  this.following.sizeX/2 > this.x + this.sizeX/2) hor =1;// go right
 		else if (this.following.x + this.following.sizeX/2  < this.x - this.sizeX/2)hor = -1; //go left
 		if(this.following.y -  this.following.sizeY/2 > this.y  + this.sizeY/2) ver =1;// go down
@@ -85,6 +91,18 @@ Sacrifice.prototype.addSacrifice = function(newSacrifice){
 		newSacrifice.following = this;
 	}else{
 		this.follower.addSacrifice(newSacrifice);
+	}
+}
+
+Sacrifice.prototype.performSacrifice = function(x, y){
+	if(this.follower != null)this.follower.performSacrifice(x,y);
+	else{
+		//Clear all existing directions
+		this.following.follower = null;
+		this.following = null;
+		this.moveQueue = [new Position(x,y)];
+		var audio = new Audio('assets/sounds/blood.mp3');
+		audio.play();
 	}
 }
 
