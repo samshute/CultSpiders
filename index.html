@@ -35,8 +35,8 @@
 		<script type="text/javascript">
             "use strict";
 
-            let WIDTH  = 1024,
-                HEIGHT = 1024,
+            let WIDTH  = 1080,
+                HEIGHT = 1080,
                 INITIAL_STAGE = TestStage;
 
 			window.addEventListener("load", function() {
@@ -44,7 +44,7 @@
                     let body = document.querySelector("body");
 
                     window.Game = new Game(body, WIDTH, HEIGHT);
-                    window.Game.start(new INITIAL_STAGE());
+                    window.Game.start(new INITIAL_STAGE(WIDTH, HEIGHT));
 
                     document.querySelector("#loading-container").classList.add("hidden");
                 })

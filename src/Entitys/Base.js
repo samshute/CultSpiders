@@ -1,8 +1,9 @@
 "use strict"
 
-function Base(charX, charY, scale, sprite){
+function Base(charX, charY, baseSize, scale, sprite){
 	this.charX = charX;
 	this.charY = charY;
+	this.baseSize = baseSize;
 	this.scale = scale;
 	this.sprite = sprite;
 

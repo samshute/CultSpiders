@@ -1,15 +1,23 @@
 "use strict";
 
-function Player(ID, charX, charY, maxX, maxY, scale, size, sprite){
+//charX is the X location on the game grid
+//charY is the Y location on the game grid
+//maxX is the width of the game grid
+//maxY is the height of the game grid
+//scale is the pixels per game grid
+//size is the number of squares in the grid a player covers in the vertical or horizontal directions
+
+function Player(ID, charX, charY, maxX, maxY, scale, sizeX, sizeY, sprite){
 	this.ID = ID;
 	this.charX = charX;
 	this.charY = charY;
 	this.movedirection = 0;
 	this.sprite = sprite;
-	this.mapMaxWidth = maxX * scale;
-	this.mapMaxHeight = maxY * scale;
+	this.mapMaxWidth = maxX;
+	this.mapMaxHeight = maxY;
 	this.scale = scale;
-	this.size = size;
+	this.sizeX = sizeX;
+	this.sizeY = sizeY;
 	this.peasantCount = 0;
 	
 	this.events = [
@@ -32,26 +40,26 @@ movedirection
 
 //Engine functions
 Player.prototype.draw = function(ctx){
-	ctx.drawImage(this.sprite, this.charX, this.charY);
+	ctx.drawImage(this.sprite, this.charX * this.scale, this.charY * this.scale);
 }
 
 
 Player.prototype.update = function(timestamp){
 	switch(this.movedirection){
 		case 1: //Up
-			this.charY -= this.scale;
+			this.charY -= 1;
 			if(this.charY <= 0) this.charY = 0;
 			break;
 		case 2: //Right
-			this.charX += this.scale;
-			if(this.charX + this.size >= this.mapMaxWidth) this.charX = this.mapMaxWidth - this.size;
+			this.charX += 1;
+			if((this.charX + this.sizeX) >= this.mapMaxWidth) this.charX = this.mapMaxWidth - this.sizeX;
 			break;
 		case 3: //Down
-			this.charY += this.scale;
-			if(this.charY + this.size >= this.mapMaxHeight) this.charY = this.mapMaxHeight- this.size;
+			this.charY += 1;
+			if((this.charY + this.sizeY) >= this.mapMaxHeight) this.charY = this.mapMaxHeight- this.sizeY;
 			break;
 		case 4:	//Left
-			this.charX -= this.scale;
+			this.charX -= 1;
 			if(this.charX <= 0) this.charX =0;
 			break;
 		default:

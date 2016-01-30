@@ -1,18 +1,18 @@
 "use strict";
 
-function TestStage() {
+function TestStage(mapPixelsX, mapPixelsY) {
     StageBase.call(this);
-	this.maxMapX = 128;
-	this.maxMapY = 128;
 	this.scale = 8;
+	this.maxMapX = mapPixelsX / this.scale;
+	this.maxMapY = mapPixelsY / this.scale;
     this.eventQueue = new EventQueue();
 
-    this.entities = [
-	new Player(1, 0, 0, this.maxMapX, this.maxMapY, this.scale, 64, Util.Sprites.get('player1')), 	//Player 1
-	new Player(2, 0, 32, this.maxMapX, this.maxMapY, this.scale, 64, Util.Sprites.get('player2'))	//Player 2
+    this.PlayersList = [
+	new Player(1, 0, 0, this.maxMapX, this.maxMapY, this.scale, 4, 8, Util.Sprites.get('player1')), 	//Player 1
+	new Player(2, 0, 32, this.maxMapX, this.maxMapY, this.scale, 4, 8, Util.Sprites.get('player2'))	//Player 2
     ];
 
-    for(let entity of this.entities) {
+    for(let entity of this.PlayersList) {
         this.eventQueue.bind(entity);
     }
 
@@ -20,7 +20,7 @@ function TestStage() {
 	window.addEventListener('keydown', this.interpKeyPress.bind(this));
     window.addEventListener('keyup', (function(e) { this.eventQueue.enqueue(e); }).bind(this));
 	
-	this.baseMan = new baseManager(this.maxMapX, this.maxMapY, this.scale, 16);
+	this.baseMan = new baseManager(this.maxMapX, this.maxMapY, this.scale, 8, 5);
 }
 
 TestStage.prototype = Object.create(StageBase.prototype);
@@ -28,25 +28,28 @@ TestStage.prototype.constructor = TestStage;
 
 TestStage.prototype.update = function(timestamp) {
     this.eventQueue.broadcast();
-
-	this.baseMan.update(timestamp);
 	
-    for(let entity of this.entities)
+	//Update Players
+    for(let entity of this.PlayersList)
        entity.update(timestamp);
+   
+	//Update Bases
+	this.baseMan.update(timestamp, this.PlayersList);
+	
 }
 
 TestStage.prototype.draw = function(ctx) {
     this.baseMan.draw(ctx);
 	
-	for(let entity of this.entities)
+	for(let entity of this.PlayersList)
         entity.draw(ctx);
 	
 	
 }
 
 //Player Sprites
-Util.Sprites.preload('player1', 'assets/sprites/p1.png');
-Util.Sprites.preload('player2', 'assets/sprites/p2.png');
+Util.Sprites.preload('player1', 'assets/sprites/viking_1.png');
+Util.Sprites.preload('player2', 'assets/sprites/viking_2.png');
 
 
 //Player Controls	TO BE REPLACED WITH PHONE CONTROLS LATER
@@ -93,7 +96,7 @@ TestStage.prototype.interpKeyPress = function(event){
 	}
 	
 	if(player != 0 && direction != 0){
-		for(let entity of this.entities) {
+		for(let entity of this.PlayersList) {
 			if(entity.ID == player){
 				switch (direction){
 					case 1:
