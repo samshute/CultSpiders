@@ -20,25 +20,37 @@
                 height: 100%;
             }
 
+            .button-screen {
+                width: 100%;
+                height: 100%;
+            }
+
+            #dpad {
+                margin-left: 5%;
+                margin-top: 8%;
+                width: 40%;
+                height: 80%;
+                position: relative;
+            }
+
             .arrow-key {
-                background-repeat: no-repeat;
-                width: 256px;
-                height: 256px;
+                background-size: 100%;
+                position: absolute;
+                width: 45%;
+                height: 45%;
                 color: rgba(0,0,0,0);
                 border: none;
                 background-color: transparent;
             }
 
-            #button-left { background-image: url("assets/controller/but_left.png"); }
+            #button-left { top: 27%; background-image: url("assets/controller/but_left.png"); }
             #button-left:hover { background-image: url("assets/controller/but_left_active.png"); }
-            #button-right { background-image: url("assets/controller/but_right.png"); }
+            #button-right { top: 27%; left: 54%; background-image: url("assets/controller/but_right.png"); }
             #button-right:hover { background-image: url("assets/controller/but_right_active.png"); }
-            #button-up { background-image: url("assets/controller/but_up.png"); }
+            #button-up { left: 27%; background-image: url("assets/controller/but_up.png"); }
             #button-up:hover { background-image: url("assets/controller/but_up_active.png"); }
-            #button-down { background-image: url("assets/controller/but_down.png"); }
+            #button-down { left: 27%; top: 54%; background-image: url("assets/controller/but_down.png"); }
             #button-down:hover { background-image: url("assets/controller/but_down_active.png"); }
-
-            
 
             .hidden { display: none; }
         </style>
@@ -64,10 +76,12 @@
             </div>
 
             <div id="button-screen" class="ahidden">
-                <button id="button-left" class="arrow-key">Left</button>
-                <button id="button-up" class="arrow-key">Up</button>
-                <button id="button-down" class="arrow-key">Down</button>
-                <button id="button-right" class="arrow-key">Right</button>
+                <div id="dpad">
+                    <button id="button-left" class="arrow-key">Left</button>
+                    <button id="button-up" class="arrow-key">Up</button>
+                    <button id="button-down" class="arrow-key">Down</button>
+                    <button id="button-right" class="arrow-key">Right</button>
+                </div>
             </div>
         </div>
 
