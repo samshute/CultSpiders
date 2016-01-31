@@ -82,6 +82,7 @@ TestStage.prototype.update = function(timestamp) {
 			//Perform sacrifice
 			if(player.follower != null){
 				this.scoreKeeper.addPoints(player.id, player.performSacrifice(home.x, home.y));
+                home.playAnimation();
 				console.log("Do scarifice");
 			}
         }

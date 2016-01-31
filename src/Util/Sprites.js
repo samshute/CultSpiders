@@ -5,14 +5,32 @@ function Animation(frames, rate) {
     this.currentFrame = 0;
     this.frameDuration = rate; // In screen frames, i.e 1/60 second;
     this.frameFuck = 0;
+    this.animating = true;
+    this.endAfterAnimation = false;
+}
+
+Animation.prototype.stop = function() {
+    this.animating = false;
+}
+
+Animation.prototype.play = function() {
+    this.animating = true;
+}
+
+Animation.prototype.playOnce = function() {
+    this.animating = true;
+    this.endAfterAnimation = true;
 }
 
 Animation.prototype.getFrame = function() {
     this.frameFuck++;
 
-    if (this.frameFuck > this.frameDuration) {
+    if (this.animating && this.frameFuck > this.frameDuration) {
         this.frameFuck = 0;
         this.currentFrame = (this.currentFrame + 1) % this.frames.length;
+
+        if (this.currentFrame == 0 && this.endAfterAnimation)
+            this.animating = false;
     }
 
     return this.frames[this.currentFrame];
