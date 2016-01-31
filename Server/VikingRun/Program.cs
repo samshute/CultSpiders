@@ -111,7 +111,7 @@ namespace VikingRun
 
         private static void OnRegisterTalk(UserContext context, dynamic json)
         {
-            if (!acceptingPlayers)
+            if (!acceptingPlayers || players.Count >= 4)
                 return;
 
             Console.WriteLine("Connected Controller");

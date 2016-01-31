@@ -27,25 +27,28 @@ ConnectionStage.prototype.register = function() {
 }
 
 ConnectionStage.prototype.draw = function(ctx) {
-    ctx.font = "30px Arial";
-    if (this.startTime === null)
-        ctx.fillText("Waiting on connections...", 10, 50);
-    else
-        ctx.fillText("Starting game in " + (this.startTime - new Date().getTime()) / 1000, 10, 50); 
+    var bg = Util.Sprites.get("splash");
+    ctx.drawImage(bg, 0, 0);
 
-    ctx.font = "18px Arial";
-
-    let y = 100;
-    let playerId = 1;
-    for(let conn of this.connections) {
-        ctx.fillText("Player " + playerId + " connected", 10, y + playerId * 20);
-        playerId++;
+    let startX = 1450;
+    let startY = 600;
+    for (let i = 0; i < this.connections.length; i++) {
+        ctx.drawImage(Util.Sprites.get('p' + (i + 1)), startX, startY + i * 95); 
     }
 }
 
 ConnectionStage.prototype.onReceive = function(msg) {
-    if (msg.Type == MessageTypes.RegisterTalk)
+    if (msg.Type == MessageTypes.RegisterTalk) {
+        if (this.connections.length >= 4) 
+            return;
+
         this.connections.push("placeholder name");
-    else if (msg.Type == MessageTypes.StartTimer) 
+    } else if (msg.Type == MessageTypes.StartTimer) 
         this.startTime = new Date(msg.Data.Time).getTime();
 }
+
+Util.Sprites.preload("splash", "assets/splash/background_purple_splash.jpg");
+Util.Sprites.preload("p1", "assets/splash/player_connects_1.png");
+Util.Sprites.preload("p2", "assets/splash/player_connects_2.png");
+Util.Sprites.preload("p3", "assets/splash/player_connects_3.png");
+Util.Sprites.preload("p4", "assets/splash/player_connects_4.png");
