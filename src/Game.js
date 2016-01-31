@@ -42,7 +42,7 @@ Game.prototype.step = function(timestep) {
     if (this.currentStage === null)
         return;
 	
-	if(!this.paused){}
+	if(!this.paused){
 		//Draw at 60Hz
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 		this.currentStage.draw(this.ctx);
