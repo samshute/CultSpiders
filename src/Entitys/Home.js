@@ -12,7 +12,7 @@ Home.prototype = Object.create(EntityBase.prototype);
 Home.prototype.constructor = Home;
 
 Home.prototype.draw = function(ctx){
-	ctx.drawImage(this.sprite, this.x * this.scale - this.sprite.width/2, this.y * this.scale - this.sprite.height/2);
+	ctx.drawImage(this.sprite, this.x * this.scale, this.y * this.scale);
 }
 
 Home.prototype.update = function(timestamp){
