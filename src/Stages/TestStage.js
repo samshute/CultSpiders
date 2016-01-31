@@ -97,6 +97,9 @@ TestStage.prototype.onRecieve = function(msg) {
 }
 
 TestStage.prototype.draw = function(ctx) {
+    let animation = Util.Sprites.get('tree');
+	ctx.drawImage(animation.getFrame(), 947 - 125, -10);
+	
     this.baseMan.draw(ctx);
     this.scoreKeeper.draw(ctx);
 	
@@ -121,3 +124,10 @@ Util.Sprites.preload('home2', 'assets/buildings/home_02.png');
 Util.Sprites.preload('home3', 'assets/buildings/home_03.png');
 Util.Sprites.preload('home4', 'assets/buildings/home_04.png');
 
+//Tree Animation
+Util.Sprites.preloadAnimation('tree', [
+    'assets/backgrounds/Environment/Tree/tree_1.png',
+    'assets/backgrounds/Environment/Tree/tree_2.png',
+    'assets/backgrounds/Environment/Tree/tree_3.png',
+    'assets/backgrounds/Environment/Tree/tree_4.png'
+    ], 18);
