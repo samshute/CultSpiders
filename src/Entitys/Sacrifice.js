@@ -81,8 +81,9 @@ Sacrifice.prototype.update = function(timestep){
 }
 
 Sacrifice.prototype.draw = function(ctx){
-	ctx.drawImage(this.sprite, this.x * this.scale, this.y * this.scale);
 	if(this.follower != null)this.follower.draw(ctx);
+	ctx.drawImage(this.sprite, this.x * this.scale, this.y * this.scale);
+	
 }
 
 Sacrifice.prototype.addSacrifice = function(newSacrifice){
@@ -94,16 +95,21 @@ Sacrifice.prototype.addSacrifice = function(newSacrifice){
 	}
 }
 
-Sacrifice.prototype.performSacrifice = function(x, y){
-	if(this.follower != null)this.follower.performSacrifice(x,y);
-	else{
+Sacrifice.prototype.performSacrifice = function(x, y, count){
 		//Clear all existing directions
-		this.following.follower = null;
-		this.following = null;
-		this.moveQueue = [new Position(x,y)];
-		var audio = new Audio('assets/sounds/blood.mp3');
-		audio.play();
-	}
+		if(this.follower != null){
+			this.following.follower = null;
+			this.following = null;
+			this.moveQueue = [new Position(x,y)];
+			return this.follower.performSacrifice(x,y, count + 1);
+		}else{
+			this.following.follower = null;
+			this.following = null;
+			this.moveQueue = [new Position(x,y)];
+			var points =0
+			for(var index = 0;index <=count + 1;index++)points +=index;
+			return points;
+		}
 }
 
 Sacrifice.prototype.addMove = function(moveToX, moveToY){

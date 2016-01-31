@@ -39,7 +39,8 @@ function TestStage(connection, playerCount) {
 	audio.play();
 	
 	var audio = new Audio('assets/sounds/background_music.mp3');
-	//audio.play();
+	audio.loop = true;
+	audio.play();
 }
 
 TestStage.prototype = Object.create(StageBase.prototype);
@@ -79,11 +80,9 @@ TestStage.prototype.update = function(timestamp) {
 			
 			
 			//Perform sacrifice
-			if(player.timeLastSacrifice + 2000 < timestamp && player.follower != null){
-				player.performSacrifice(home.x, home.y)
-				this.scoreKeeper.addPoints(player.id, 1);
+			if(player.follower != null){
+				this.scoreKeeper.addPoints(player.id, player.performSacrifice(home.x, home.y));
 				console.log("Do scarifice");
-				player.timeLastSacrifice = timestamp;
 			}
         }
     }
