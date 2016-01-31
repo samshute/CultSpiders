@@ -15,6 +15,8 @@ function baseManager(stage, width, height, scale, baseSize, maxBaseCount){
 	this.baseCount = 0;
 	this.maxbaseCount = maxBaseCount;
 	this.stage = stage;
+    this.animationPositions = [ ];
+    this.animation = Util.Sprites.get('Explo');
 }
 
 baseManager.prototype.spawnNewBase = function(){
@@ -31,6 +33,10 @@ baseManager.prototype.spawnNewBase = function(){
 baseManager.prototype.draw = function (ctx){
 	for(let entity of this.baseList)
         entity.draw(ctx);
+	
+    for(let position of this.animationPositions) 
+        if (position.live)
+	        ctx.drawImage(this.animation.getFrame(), position.x * this.scale, position.y * this.scale);
 }
 
 
@@ -58,6 +64,7 @@ baseManager.prototype.update = function(timestamp, playersList){
 					//this.stage.sacMan.addSacrifice(newSacrifice);
 					this.baseList.splice(index, 1);
 					this.baseCount--;
+                    this.animationPositions.push({ x: base.x, y: base.y, steps: 10, live: true});
 				}
 			}
 		}
@@ -68,7 +75,24 @@ baseManager.prototype.update = function(timestamp, playersList){
 	for(let entity of this.baseList)
         entity.update(timestamp);
 	
-	
+    for(let i = 0; i < this.animationPositions.length; i++) {
+        if (!this.animationPositions[i].live)
+            continue;
+
+        this.animationPositions[i].steps --;
+
+        if (this.animationPositions[i].steps <= 0)
+            this.animationPositions[i].live = false;
+    }
 }
+
+Util.Sprites.preloadAnimation('Explo', [
+        'assets/sprites/Blood/base_blood_01.png',
+        'assets/sprites/Blood/dwelling_04.png',
+        'assets/sprites/Blood/dwelling_05.png',
+        'assets/sprites/Blood/dwelling_06.png',
+        'assets/sprites/Blood/dwelling_08.png',
+        'assets/sprites/Blood/dwelling_09.png'
+    ], 15)
 
 Util.Sprites.preload('base', 'assets/buildings/dwelling_01.png');
