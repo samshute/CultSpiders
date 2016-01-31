@@ -79,11 +79,9 @@ TestStage.prototype.update = function(timestamp) {
 			
 			
 			//Perform sacrifice
-			if(player.timeLastSacrifice + 2000 < timestamp && player.follower != null){
-				player.performSacrifice(home.x, home.y)
-				this.scoreKeeper.addPoints(player.id, 1);
+			if(player.follower != null){
+				this.scoreKeeper.addPoints(player.id, player.performSacrifice(home.x, home.y));
 				console.log("Do scarifice");
-				player.timeLastSacrifice = timestamp;
 			}
         }
     }

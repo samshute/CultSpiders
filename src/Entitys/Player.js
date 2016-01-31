@@ -42,8 +42,9 @@ moveDirection
 
 //Engine functions
 Player.prototype.draw = function(ctx){
-	ctx.drawImage(this.sprite, this.x * this.scale, this.y * this.scale);
 	if(this.follower != null)this.follower.draw(ctx);
+	ctx.drawImage(this.sprite, this.x * this.scale, this.y * this.scale);
+	
 }
 
 
@@ -112,6 +113,12 @@ Util.Sprites.preload('sacrifice12', 'assets/sprites/Sacrifices/sacrifice_12.png'
 Util.Sprites.preload('sacrifice13', 'assets/sprites/Sacrifices/sacrifice_13_swagadiah.png');
 
 Player.prototype.performSacrifice = function(x, y){
-	if(this.follower != null)this.follower.performSacrifice(x,y);
+	if(this.follower != null){
+		var audio = new Audio('assets/sounds/blood.mp3');
+		audio.play();
+		return this.follower.performSacrifice(x,y,0);	
+	}else{
+		return 0;
+	}
 }
 
