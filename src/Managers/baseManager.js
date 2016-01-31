@@ -19,8 +19,8 @@ function baseManager(stage, width, height, scale, baseSize, maxBaseCount){
 
 baseManager.prototype.spawnNewBase = function(){
 	//TODO Check that the bases arent spawning too close to the map edges, each other, and the players
-	var horizontalBand =(Math.floor(this.mapWidth *0.1));
-	var verticalBand =(Math.floor(this.mapHeight *0.1));
+	var horizontalBand =(Math.floor(this.mapWidth *0.25));
+	var verticalBand =(Math.floor(this.mapHeight *0.25));
 	var newBaseX = Math.floor((Math.random() * (this.mapWidth - horizontalBand*2 - this.baseSize))) + horizontalBand;
 	var newBaseY = Math.floor((Math.random() * (this.mapHeight - verticalBand*2 - this.baseSize))) + verticalBand ;
 	//Add new base to the list
@@ -39,7 +39,7 @@ baseManager.prototype.update = function(timestamp, playersList){
 	//Spawn new base if:
 	//one hasn't been spawned in the last 10 seconds 
 	//and there arent the maximum number of allowed bases
-	if(this.timeOfLastBaseSpawn + 10000 < timestamp && this.baseCount < this.maxbaseCount){
+	if(this.timeOfLastBaseSpawn + 5000 < timestamp && this.baseCount < this.maxbaseCount){
 		//Add the new base
 		this.spawnNewBase();
 		this.baseCount++;

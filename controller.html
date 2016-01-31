@@ -219,6 +219,12 @@
                 element.src = element.src.replace(".png", "_active.png");
 
                 connection.send({Type: MessageTypes.FlavourKey, Data: { playerId: playerId, key: code }});
+				
+				if(code == 'A'){
+					var audio = new Audio('assets/sounds/a_button.mp3');
+					audio.loop = true;
+					audio.play();
+				}
             }
 
             connectButton.addEventListener("click", function() {

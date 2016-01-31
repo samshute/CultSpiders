@@ -39,7 +39,8 @@ function TestStage(connection, playerCount) {
 	audio.play();
 	
 	var audio = new Audio('assets/sounds/background_music.mp3');
-	//audio.play();
+	audio.loop = true;
+	audio.play();
 }
 
 TestStage.prototype = Object.create(StageBase.prototype);
