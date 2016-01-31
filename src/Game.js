@@ -9,7 +9,7 @@ function Game(targetElement, width, height) {
     this.canvas.height = height; 
     targetElement.appendChild(this.canvas);
 	
-	
+	this.paused = false;
 	
 	
     // Configure drawing context
@@ -41,10 +41,13 @@ Game.prototype.changeStage = function(newStage) {
 Game.prototype.step = function(timestep) {
     if (this.currentStage === null)
         return;
-	//Draw at 60Hz
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.currentStage.draw(this.ctx);
-	this.currentStage.update(timestep);
+	
+	if(!this.paused){
+		//Draw at 60Hz
+		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this.currentStage.draw(this.ctx);
+		this.currentStage.update(timestep);
+	}
 
     window.requestAnimationFrame(this.step.bind(this));
 }
