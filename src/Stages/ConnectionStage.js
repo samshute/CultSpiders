@@ -11,6 +11,10 @@ function ConnectionStage(url) {
     });
 
     this.startTime = null;
+	
+	var audio = new Audio('assets/sounds/splash_background_music.mp3');
+	audio.loop = true;
+	audio.play();
 }
 
 ConnectionStage.prototype = Object.create(StageBase.prototype);

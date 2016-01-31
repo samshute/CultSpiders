@@ -11,8 +11,10 @@ function ScoreKeeper(homes, scale) {
 ScoreKeeper.prototype.update = function(timestamp) {
 
     for(var i = 0; i < this.scores.length; i++) {
-        if (this.scores[i] > WIN_SCORE)
+        if (this.scores[i] > WIN_SCORE){
             console.log("player " + i + "won");
+			Game.changeStage(new WinStage(this.connection, this.connections.length, i));
+		}
     }
 }
 

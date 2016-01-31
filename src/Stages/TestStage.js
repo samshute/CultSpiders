@@ -91,6 +91,8 @@ TestStage.prototype.update = function(timestamp) {
 
 	//Update Bases
 	this.baseMan.update(timestamp, this.playerList);
+	
+	this.scoreKeeper.update(timestamp);
 	//this.baseMan.update(timestamp, this.playerList);
 }
 
