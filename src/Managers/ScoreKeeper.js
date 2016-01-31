@@ -24,6 +24,6 @@ ScoreKeeper.prototype.draw = function(ctx) {
     for(var i = 0; i < this.homes.length; i++) {
         ctx.font = "12px Arial";
         ctx.fillStyle = "yellow";
-        ctx.fillText((this.scores[i] || 0) + "pts", (this.homes[i].x) * this.scale, (this.homes[i].y) * this.scale - this.homes[i].sprite.height * 0.70);
+        ctx.fillText((this.scores[i] || 0) + "pts", (this.homes[i].x) * this.scale + this.homes[i].sprite.width / 2, (this.homes[i].y) * this.scale - 10);
     }
 }

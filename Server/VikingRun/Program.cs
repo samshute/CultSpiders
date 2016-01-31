@@ -144,9 +144,9 @@ namespace VikingRun
             acceptingPlayers = false;
 
             foreach (var player in players)
-                player.Send(JsonConvert.SerializeObject(new { Type = CommandType.StartTimer, Data = new { Time = DateTime.UtcNow.AddSeconds(-5) } }));
+                player.Send(JsonConvert.SerializeObject(new { Type = CommandType.StartTimer, Data = new { Time = DateTime.UtcNow.AddDays(-5) } }));
 
-            presenter.Send(JsonConvert.SerializeObject(new { Type = CommandType.StartTimer, Data = new { Time = DateTime.UtcNow.AddSeconds(-5) } }));
+            presenter.Send(JsonConvert.SerializeObject(new { Type = CommandType.StartTimer, Data = new { Time = DateTime.UtcNow.AddDays(-5) } }));
         }
 
         public enum CommandType

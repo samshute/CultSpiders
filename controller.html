@@ -66,6 +66,17 @@
                 height: auto;
             }
 
+            #start-screen {
+               width: 50%;
+               height: 65%;
+               margin: 2% auto;
+            }
+
+            #start-screen img {
+                width: 100%;
+                height: auto;
+            }
+
 
             #button-left { top: 27%; } 
             #button-right { top: 27%; left: 54%; }
@@ -90,8 +101,8 @@
             </div>
 
             <div id="start-screen" class="hidden">
-                <p> Waiting on game start </p>
-                <button id="start-game"> Start game </button>
+                <img id="character-thing" src="" />
+                <img id="start-game" src="assets/controller/but_start.png" />
             </div>
 
             <div id="countdown-screen" class="hidden">
@@ -124,6 +135,8 @@
             let loadingScreen = document.querySelector("#loading-screen");
             let countDownTime = document.querySelector("#countdown-screen");
             let controllerScreen = document.querySelector("#button-screen");
+
+            let characterInfo = document.querySelector("#character-thing");
 
             let buttonUp = document.querySelector("#button-up");
             let buttonDown = document.querySelector("#button-down");
@@ -223,7 +236,7 @@
 
             connectButton.addEventListener("click", function() {
                 connectScreen.classList.add("hidden");
-                loadingScreen.classList.remove("hidden");
+                //loadingScreen.classList.remove("hidden");
 
                 connection = new Connection(url, {
                     onConnect: function(event) {  
@@ -236,6 +249,7 @@
                         playerId = msg.Data.Id;
 
                         startScreen.classList.remove("hidden");
+                        characterInfo.src = "assets/controller/player_" + (playerId + 1) + "_spawn.png";
 
                         connection.onReceive = function(msg) {
                             if (msg.Type != MessageTypes.StartTimer)
