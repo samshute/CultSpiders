@@ -59,7 +59,7 @@ Sacrifice.prototype.update = function(timestep){
 		if((this.y + this.sizeY) >= this.mapMaxHeight) this.y = this.mapMaxHeight- this.sizeY;
 		if((this.x + this.sizeX) >= this.mapMaxWidth) this.x = this.mapMaxWidth - this.sizeX;
 		
-		if(this.moveQueue[0].x == this.x && this.moveQueue[0].y == this.y)this.moveQueue.splice(0,1);
+		if(Math.floor(this.moveQueue[0].x) == Math.floor(this.x) && Math.floor(this.moveQueue[0].y) == Math.floor(this.y))this.moveQueue.splice(0,1);
 	}else if(this.following != null){
 		//Move towards following
 		if(this.following.x -  this.following.sizeX/2 > this.x + this.sizeX/2) hor =1;// go right
@@ -107,6 +107,12 @@ Sacrifice.prototype.performSacrifice = function(x, y){
 }
 
 Sacrifice.prototype.addMove = function(moveToX, moveToY){
+	if(!(moveToX === parseInt(moveToX, 10))){
+		console.log("Non int X received");
+	}
+	if(!(moveToX === parseInt(moveToY, 10))){
+		console.log("Non int Y received");
+	}
 	this.moveQueue.push(new Position(moveToX, moveToY));
 	if(this.follower != null)this.follower.addMove(moveToX, moveToY);
 }

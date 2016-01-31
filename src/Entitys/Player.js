@@ -68,6 +68,10 @@ Player.prototype.update = function(timestamp){
 		default:
 			break;
 	}
+	
+	this.x = Math.floor(this.x);
+	this.y = Math.floor(this.y);
+	
 	if(this.follower != null)this.follower.update(timestamp);
 }
 

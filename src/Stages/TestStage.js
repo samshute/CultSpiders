@@ -35,6 +35,12 @@ function TestStage(connection, playerCount) {
 	this.baseMan = new baseManager(this, this.maxMapX, this.maxMapY, this.scale, 8, 5);
 
     this.scoreKeeper = new ScoreKeeper(this.homeList, this.scale);
+	
+	var audio = new Audio('assets/sounds/herewego.mp3');
+	audio.play();
+	
+	var audio = new Audio('assets/sounds/background_music.mp3');
+	audio.play();
 }
 
 TestStage.prototype = Object.create(StageBase.prototype);
@@ -58,8 +64,6 @@ TestStage.prototype.update = function(timestamp) {
 
         if (player.peasentCount == 0)
             continue;
-
-        let dist = Math.abs((player.x - home.x) * (player.x - home.x)) + Math.abs((player.y - home.y) * (player.y - home.y)); // Change to in bounding box
         
 		let inside = false;
 		if(	player.x + player.sprite.width/this.scale > home.x &&		//right
