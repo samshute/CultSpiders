@@ -43,8 +43,8 @@ moveDirection
 //Engine functions
 Player.prototype.draw = function(ctx){
 	if(this.follower != null)this.follower.draw(ctx);
-	ctx.drawImage(this.sprite, this.x * this.scale, this.y * this.scale);
-	
+	ctx.drawImage(this.sprite.getFrame(), this.x * this.scale, this.y * this.scale);
+	//ctx.drawImage(animation.getFrame(), 947 - 125, -10);
 }
 
 

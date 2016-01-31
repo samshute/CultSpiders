@@ -7,6 +7,8 @@ function Animation(frames, rate) {
     this.frameFuck = 0;
     this.animating = true;
     this.endAfterAnimation = false;
+	this.width = this.frames[0].width;
+	this.height = this.frames[0].height;
 }
 
 Animation.prototype.stop = function() {

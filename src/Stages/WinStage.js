@@ -34,19 +34,7 @@ WinStage.prototype.onRecieve = function(msg) {
 }
 
 WinStage.prototype.draw = function(ctx) {
-    let animation = Util.Sprites.get('tree');
-	ctx.drawImage(animation.getFrame(), 947 - 125, -10);
-	
-    this.baseMan.draw(ctx);
-    this.scoreKeeper.draw(ctx);
-	
-	//Draw houses first so they are at the lowest level
-    for (let entity of this.homeList) 
-        entity.draw(ctx);
-	
-	//DRAW PLAYERS SECOND SO THEY ARE ON TOP OF HOUSES
-	for (let entity of this.playerList)
-        entity.draw(ctx);
+	//Do draw win
 }
 
 //Player Sprites
@@ -55,16 +43,3 @@ Util.Sprites.preload('player2', 'assets/sprites/viking_2.png');
 Util.Sprites.preload('player3', 'assets/sprites/viking_3.png');
 Util.Sprites.preload('player4', 'assets/sprites/viking_4.png');
 
-//House Sprites
-Util.Sprites.preload('home1', 'assets/buildings/home_01.png');
-Util.Sprites.preload('home2', 'assets/buildings/home_02.png');
-Util.Sprites.preload('home3', 'assets/buildings/home_03.png');
-Util.Sprites.preload('home4', 'assets/buildings/home_04.png');
-
-//Tree Animation
-Util.Sprites.preloadAnimation('tree', [
-    'assets/backgrounds/Environment/Tree/tree_1.png',
-    'assets/backgrounds/Environment/Tree/tree_2.png',
-    'assets/backgrounds/Environment/Tree/tree_3.png',
-    'assets/backgrounds/Environment/Tree/tree_4.png'
-    ], 18);

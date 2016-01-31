@@ -7,7 +7,7 @@ function TestStage(connection, playerCount) {
 	this.maxMapY = Game.canvas.height / this.scale;
     this.eventQueue = new EventQueue();
     this.connection = connection;
-
+	this.playerCount = playerCount;
     let offset = 42;
 
     this.playerList = [
@@ -118,7 +118,12 @@ TestStage.prototype.draw = function(ctx) {
 }
 
 //Player Sprites
-Util.Sprites.preload('player1', 'assets/sprites/viking_1.png');
+Util.Sprites.preloadAnimation('player1', [
+'assets/sprites/viking_1.png',
+'assets/sprites/viking_1_run_1.png',
+'assets/sprites/viking_1.png',
+'assets/sprites/viking_1_run_2.png'
+], 12);
 Util.Sprites.preload('player2', 'assets/sprites/viking_2.png');
 Util.Sprites.preload('player3', 'assets/sprites/viking_3.png');
 Util.Sprites.preload('player4', 'assets/sprites/viking_4.png');
