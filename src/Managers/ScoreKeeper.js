@@ -1,6 +1,6 @@
 "use strict";
 
-let WIN_SCORE = 100;
+let WIN_SCORE = 25;
 
 function ScoreKeeper(homes, scale) {
     this.scores = [];
@@ -13,7 +13,7 @@ ScoreKeeper.prototype.update = function(timestamp) {
     for(var i = 0; i < this.scores.length; i++) {
         if (this.scores[i] > WIN_SCORE){
             console.log("player " + i + "won");
-			Game.changeStage(new WinStage(Game.currentStage.connection, Game.currentStage.playerCount, i));
+			Game.changeStage(new WinStage(Game.currentStage.connection, Game.currentStage.playerList.length, Game.currentStage.playerList[i], i));
 		}
     }
 }
