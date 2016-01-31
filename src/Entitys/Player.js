@@ -8,13 +8,14 @@
 //size is the number of squares in the grid a player covers in the vertical or horizontal directions
 
 
-function Player(id, x, y, maxX, maxY, scale, sprite){
+function Player(id, x, y, maxX, maxY, scale, sprite, spriteFlipped){
 	this.id = id;
 	this.x = x;
 	this.y = y;
 	this.moveDirection = 0;
 	this.speed;
 	this.sprite = sprite;
+	this.spriteFlipped = spriteFlipped;
 	this.mapMaxWidth = maxX;
 	this.mapMaxHeight = maxY;
 	this.scale = scale;
@@ -22,6 +23,7 @@ function Player(id, x, y, maxX, maxY, scale, sprite){
 	this.sizeY = 64/scale;
 	this.follower;
 	this.timeLastSacrifice = 0;
+	this.flipped = false;
 	
 	this.events = [
         { type: 'player-command', filter: (function(x) { return x.data.playerId == this.id }).bind(this), action: this.onInput.bind(this) }
@@ -43,8 +45,11 @@ moveDirection
 //Engine functions
 Player.prototype.draw = function(ctx){
 	if(this.follower != null)this.follower.draw(ctx);
-	ctx.drawImage(this.sprite.getFrame(), this.x * this.scale, this.y * this.scale);
-	//ctx.drawImage(animation.getFrame(), 947 - 125, -10);
+	if(this.flipped){
+		ctx.drawImage(this.spriteFlipped.getFrame(), this.x * this.scale, this.y * this.scale);
+	}else{
+		ctx.drawImage(this.sprite.getFrame(), this.x * this.scale, this.y * this.scale);
+	}
 }
 
 
@@ -56,6 +61,7 @@ Player.prototype.update = function(timestamp){
 			break;
 		case 2: //Right
 			this.x += 1;
+			this.flipped = true;
 			if((this.x + this.sizeX) * this.scale >= Util.BackgroundEdges.maxX[this.y * this.scale]) this.x = (Util.BackgroundEdges.maxX[this.y * this.scale] / this.scale) - this.sizeX;
 			break;
 		case 3: //Down
@@ -64,6 +70,7 @@ Player.prototype.update = function(timestamp){
 			break;
 		case 4:	//Left
 			this.x -= 1;
+			this.flipped = false;
 			if(this.x * this.scale <= Util.BackgroundEdges.minX[this.y * this.scale]) this.x = Util.BackgroundEdges.minX[this.y * this.scale] / this.scale;
 			break;
 		default:

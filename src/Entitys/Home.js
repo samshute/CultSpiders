@@ -8,19 +8,25 @@ function Home(playerId, x, y, scale, sprite) {
 	this.sprite = sprite;
     this.animation = Util.Sprites.get('blood');
     this.animation.stop();
+	this.playing = false;
 }
 
 Home.prototype = Object.create(EntityBase.prototype);
 Home.prototype.constructor = Home;
 
 Home.prototype.draw = function(ctx){
-    if (this.animation.animating) 
+    if (this.playing) {
+		if (!this.animation.animating) {
+			this.playing = false;
+		}
         ctx.drawImage(this.animation.getFrame(), this.x * this.scale, this.y * this.scale + 75);
+	}
 
 	ctx.drawImage(this.sprite, this.x * this.scale, this.y * this.scale);
 }
 
 Home.prototype.playAnimation = function() {
+	this.playing = true;
     this.animation.playOnce();
 }
 

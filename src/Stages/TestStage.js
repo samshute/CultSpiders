@@ -11,10 +11,10 @@ function TestStage(connection, playerCount) {
     let offset = 42;
 
     this.playerList = [
-        new Player(0, offset,  offset, this.maxMapX, this.maxMapY, this.scale, Util.Sprites.get('player1')),
-        new Player(1, offset, this.maxMapY - Util.Sprites.get('player2').height/this.scale - offset, this.maxMapX, this.maxMapY, this.scale, Util.Sprites.get('player2')),
-        new Player(2, this.maxMapX - Util.Sprites.get('player3').width/this.scale - offset, offset, this.maxMapX, this.maxMapY, this.scale, Util.Sprites.get('player3')),
-        new Player(3, this.maxMapX - Util.Sprites.get('player3').width/this.scale - offset, this.maxMapY - Util.Sprites.get('player4').height/this.scale - offset, this.maxMapX, this.maxMapY, this.scale, Util.Sprites.get('player4'))
+        new Player(0, offset,  offset, this.maxMapX, this.maxMapY, this.scale, Util.Sprites.get('player1'), Util.Sprites.get('player1r')),
+        new Player(1, offset, this.maxMapY - Util.Sprites.get('player2').height/this.scale - offset, this.maxMapX, this.maxMapY, this.scale, Util.Sprites.get('player2'), Util.Sprites.get('player2r')),
+        new Player(2, this.maxMapX - Util.Sprites.get('player3').width/this.scale - offset, offset, this.maxMapX, this.maxMapY, this.scale, Util.Sprites.get('player3'), Util.Sprites.get('player3r')),
+        new Player(3, this.maxMapX - Util.Sprites.get('player3').width/this.scale - offset, this.maxMapY - Util.Sprites.get('player4').height/this.scale - offset, this.maxMapX, this.maxMapY, this.scale, Util.Sprites.get('player4'), Util.Sprites.get('player4r'))
     ].splice(0, playerCount);
     offset = 35;
 
@@ -124,9 +124,48 @@ Util.Sprites.preloadAnimation('player1', [
 'assets/sprites/viking_1.png',
 'assets/sprites/viking_1_run_2.png'
 ], 12);
-Util.Sprites.preload('player2', 'assets/sprites/viking_2.png');
-Util.Sprites.preload('player3', 'assets/sprites/viking_3.png');
-Util.Sprites.preload('player4', 'assets/sprites/viking_4.png');
+Util.Sprites.preloadAnimation('player1r', [
+'assets/sprites/viking_1_r.png',
+'assets/sprites/viking_1_run_1_r.png',
+'assets/sprites/viking_1_r.png',
+'assets/sprites/viking_1_run_2_r.png'
+], 12);
+Util.Sprites.preloadAnimation('player2', [
+'assets/sprites/viking_2.png',
+'assets/sprites/viking_2_run_1.png',
+'assets/sprites/viking_2.png',
+'assets/sprites/viking_2_run_2.png'
+], 12);
+Util.Sprites.preloadAnimation('player2r', [
+'assets/sprites/viking_2_r.png',
+'assets/sprites/viking_2_run_1_r.png',
+'assets/sprites/viking_2_r.png',
+'assets/sprites/viking_2_run_2_r.png'
+], 12);
+Util.Sprites.preloadAnimation('player3', [
+'assets/sprites/viking_3.png',
+'assets/sprites/viking_3_run_1.png',
+'assets/sprites/viking_3.png',
+'assets/sprites/viking_3_run_2.png'
+], 12);
+Util.Sprites.preloadAnimation('player3r', [
+'assets/sprites/viking_3_r.png',
+'assets/sprites/viking_3_run_1_r.png',
+'assets/sprites/viking_3_r.png',
+'assets/sprites/viking_3_run_2_r.png'
+], 12);
+Util.Sprites.preloadAnimation('player4', [
+'assets/sprites/viking_4.png',
+'assets/sprites/viking_4_run_1.png',
+'assets/sprites/viking_4.png',
+'assets/sprites/viking_4_run_2.png'
+], 12);
+Util.Sprites.preloadAnimation('player4r', [
+'assets/sprites/viking_4_r.png',
+'assets/sprites/viking_4_run_1_r.png',
+'assets/sprites/viking_4_r.png',
+'assets/sprites/viking_4_run_2_r.png'
+], 12);
 
 //House Sprites
 Util.Sprites.preload('home1', 'assets/buildings/home_01.png');

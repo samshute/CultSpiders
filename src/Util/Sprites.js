@@ -71,6 +71,8 @@ Sprites.prototype.preloadAnimation = function (key, paths, drawRate) {
     this.loaded.set(key, new Animation(imgs, drawRate));
 }
 
+
+
 Sprites.prototype.get = function(key) {
     let val = this.loaded.get(key);
 

@@ -1,6 +1,6 @@
 "use strict";
 
-let WIN_SCORE = 100;
+let WIN_SCORE = 5;
 
 function ScoreKeeper(homes, scale) {
     this.scores = [];
